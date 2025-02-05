@@ -30,7 +30,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
 <!--  jQuery & Toastr JS -->
-@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
@@ -119,10 +119,12 @@ else
 
         if (successMessage) {
             toastr.success(successMessage, "Success");
+            
         }
 
         if (errorMessage) {
-            toastr.error(errorMessage, "Error");
+            toastr.error(errorMessage, "Error", { positionClass: "toast-top-right" });
+             @TempData.Remove("ErrorMessage");
         }
     });
 </script>

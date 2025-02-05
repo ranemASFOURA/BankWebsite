@@ -38,37 +38,6 @@
     </div>
 </section>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    @*<script>
-        $(document).ready(function () {
-            $('form').submit(function (event) {
-                var amount = $('input[name="amount"]').val();
-                if (amount < 0) {
-                    alert('You should not put a negative amount.');
-                    event.preventDefault(); // Prevent form submission
-                }
-            });
-        });
-    </script>*@
-
-    <script>
-        $(document).ready(function () {
-            $('form').submit(function (event) {
-                var amount = $('input[name="amount"]').val();
-                if (amount < 0) {
-                    $('#amountError').show(); 
-                    event.preventDefault(); 
-                } else {
-                    $('#amountError').hide();
-                }
-            });
-        });
-    </script>
-
-}
 
 <style>
     :root {
@@ -159,3 +128,25 @@
         transform: scale(1.05);
     }
 </style>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+   
+    <script>
+        $(document).ready(function () {
+    $('form').submit(function (event) {
+        var amount = parseFloat($('input[name="amount"]').val());
+        if (amount < 0) {
+            $('#amountError').show();
+            event.preventDefault(); 
+        } else {
+            $('#amountError').hide();
+        }
+    });
+});
+
+    </script>
+
+}
+
