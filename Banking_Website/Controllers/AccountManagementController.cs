@@ -65,7 +65,7 @@ namespace Banking_Website.Controllers
             }
             return View();
         }
-
+         
     [HttpGet]
         public IActionResult AccountDetails(int accountId)
         {
