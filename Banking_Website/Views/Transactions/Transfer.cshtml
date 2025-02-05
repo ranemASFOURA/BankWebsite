@@ -1,0 +1,37 @@
+﻿@model Banking_Website.Models.Accounts
+
+@{
+    ViewData["Title"] = "Transfer Funds";
+}
+
+<section id="transfer-funds" class="transfer-funds section">
+    <div class="container section-title text-center">
+        <h2>Transfer Funds</h2>
+        <p>Enter the details below to transfer funds.</p>
+    </div>
+
+    <div class="container" style="max-width: 600px; margin: auto;">
+        <form asp-controller="Transactions" asp-action="Transfer" method="post">
+            <input type="hidden" name="accountId" value="@Model.Id" />
+
+            <div class="form-group">
+                <label for="TargetAccountNumber" class="pb-2">Target Account Number</label>
+                <input type="text" name="targetAccountNumber" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Amount" class="pb-2">Amount</label>
+                <input type="number" name="amount" class="form-control" required />
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Transfer</button>
+            </div>
+        </form>
+    </div>
+</section>
+@section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }

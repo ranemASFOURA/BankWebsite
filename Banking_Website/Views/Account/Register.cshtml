@@ -1,0 +1,118 @@
+﻿@model Banking_Website.ViewModels.RegisterVM
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section id="register">
+    <div class="form-container">
+        <h2 class="text-center">Register</h2>
+        <p class="text-center">Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+
+        <form asp-controller="Account" asp-action="Register" method="post" role="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Your Name</label>
+                <input type="text" asp-for="Name" class="form-control" required>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Your Email</label>
+                <input type="email" asp-for="Email" class="form-control" required>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Your Password</label>
+                <input type="password" asp-for="Password" class="form-control" required>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label">Confirm Your Password</label>
+                <input type="password" asp-for="ConfirmPassword" class="form-control" required>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Address" class="form-label">Your Address</label>
+                <textarea asp-for="Address" rows="3" class="form-control" required></textarea>
+            </div>
+
+            <div class="text-center">
+                <a asp-action="Login" class="btn btn-link">Have an Account?</a>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<style>
+    :root {
+        --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        --heading-font: "Raleway", sans-serif;
+        --accent-color: #009970;
+        --background-color: #ffffff;
+        --default-color: #444444;
+        --heading-color: #36343a;
+        --contrast-color: #ffffff;
+    }
+
+    body {
+        color: var(--default-color);
+        background-color: var(--background-color);
+        font-family: var(--default-font);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Use min-height instead of height */
+        margin: 0;
+    }
+
+    .main {
+        flex: 1; /* Allow the main content to grow */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px; /* Add some padding */
+    }
+
+    .form-container {
+        background-color: var(--surface-color);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        width: 400px; /* Adjust width as needed */
+        margin-top: 20px; /* Add margin-top for spacing */
+    }
+
+    .btn-primary {
+        background-color: var(--accent-color);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: color-mix(in srgb, var(--accent-color), transparent 25%);
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: var(--heading-color);
+    }
+
+    .text-danger {
+        color: red;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,118 @@
+﻿@model Banking_Website.Models.ApplicationUser
+
+<style>
+    :root {
+        --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        --accent-color: #009970; /* Main accent color */
+        --background-color: #f9f9f9; /* Light background */
+        --form-background-color: #ffffff; /* Form background */
+        --default-color: #444444; /* Default text color */
+        --heading-color: #36343a; /* Heading color */
+        --button-color: #007bff; /* Button color */
+        --button-hover-color: #0056b3; /* Button hover color */
+    }
+
+    body {
+        font-family: var(--default-font);
+        background-color: var(--background-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .form-container {
+        background-color: var(--form-background-color);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        width: 400px; /* Adjust width as needed */
+        text-align: center;
+    }
+
+    h2 {
+        color: var(--heading-color);
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    label {
+        font-weight: bold;
+        color: var(--heading-color);
+    }
+
+    .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        padding: 10px;
+        width: 100%;
+        transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 5px rgba(0, 153, 112, 0.5);
+    }
+
+    .submit-button {
+        background-color: var(--button-color);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+    }
+
+    .submit-button:hover {
+        background-color: var(--button-hover-color);
+    }
+
+    .text-danger {
+        color: red;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Create a New Bank Account</h2>
+
+    <form asp-action="CreateAccount" method="post">
+        <div class="form-group">
+            <label asp-for="Name">Full Name</label>
+            <input asp-for="Name" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email">Email Address</label>
+            <input asp-for="Email" class="form-control" type="email" required />
+        </div>
+
+        <div class="form-group">
+            <label for="InitialBalance">Initial Balance</label>
+            <input name="initialBalance" class="form-control" type="number" min="100" required />
+        </div>
+
+        <div class="form-group">
+            <label for="SecurityQuestion">Security Question</label>
+            <select name="securityQuestion" class="form-control" required>
+                <option value="">Choose a question</option>
+                <option value="What was the name of your first pet?">What was the name of your first pet?</option>
+                <option value="What was your first car?">What was your first car?</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="SecurityAnswer">Security Answer</label>
+            <input name="securityAnswer" class="form-control" required />
+        </div>
+
+        <button type="submit" class="submit-button">Create Account</button>
+    </form>
+</div>

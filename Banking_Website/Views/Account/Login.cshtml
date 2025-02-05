@@ -1,0 +1,109 @@
+﻿@model Banking_Website.ViewModels.LoginVM
+@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    :root {
+        --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        --heading-font: "Raleway", sans-serif;
+        --accent-color: #009970;
+        --background-color: #ffffff;
+        --default-color: #444444;
+        --heading-color: #36343a;
+        --contrast-color: #ffffff;
+    }
+
+    body {
+        color: var(--default-color);
+        background-color: var(--background-color);
+        font-family: var(--default-font);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Use min-height instead of height */
+        margin: 0;
+    }
+
+    .main {
+        flex: 1; /* Allow the main content to grow */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px; /* Add some padding */
+    }
+
+    .form-container {
+        background-color: var(--surface-color);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        width: 400px; /* Adjust width as needed */
+        margin-top: 20px; /* Add margin-top for spacing */
+    }
+
+    .btn-primary {
+        background-color: var(--accent-color);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: color-mix(in srgb, var(--accent-color), transparent 25%);
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: var(--heading-color);
+    }
+
+    .text-danger {
+        color: red;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
+
+<section id="login">
+    <div class="form-container">
+        <h2 class="text-center">Login</h2>
+        <p class="text-center">Accede a tu cuenta de manera segura</p>
+
+        <form asp-action="Login" asp-controller="Account" method="post" role="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Your Email</label>
+                <input type="email" asp-for="Email" class="form-control" required>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Your Password</label>
+                <input type="password" asp-for="Password" class="form-control" required>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <label for="RememberMe" class="form-check-label">
+                    <input asp-for="RememberMe" type="checkbox" id="RememberMe" class="form-check-input" />
+                    @Html.DisplayNameFor(a => a.RememberMe)
+                </label>
+            </div>
+
+            <div class="text-center">
+                <a asp-action="Register" class="btn btn-link">Don't have an Account?</a>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

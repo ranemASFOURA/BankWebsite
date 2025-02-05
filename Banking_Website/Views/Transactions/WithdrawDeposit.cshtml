@@ -1,0 +1,42 @@
+﻿@model Banking_Website.Models.Accounts
+
+@{
+    ViewData["Title"] = "Withdraw or Deposit";
+}
+
+<section id="withdraw-deposit" class="withdraw-deposit section">
+    <div class="container section-title text-center">
+        <h2>Withdraw or Deposit</h2>
+        <p>Choose your transaction type and enter the amount.</p>
+    </div>
+
+    <div class="container" style="max-width: 600px; margin: auto;">
+        <form asp-controller="Transactions" asp-action="WithdrawDeposit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="accountId" value="@Model.Id" />
+
+            <div class="form-group">
+                <label for="TransactionType" class="pb-2">Transaction Type</label>
+                <select name="transactionType" class="form-control" required>
+                    <option value="deposit">Deposit</option>
+                    <option value="withdraw">Withdraw</option>
+                </select>   
+            </div>
+
+            <div class="form-group">
+                <label for="Amount" class="pb-2">Amount</label>
+                <input type="number" name="amount" step="0.01" class="form-control" required />
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
