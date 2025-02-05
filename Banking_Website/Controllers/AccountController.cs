@@ -52,7 +52,7 @@ namespace Banking_Website.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("CreateAccount", "AccountManagement");
+                        return RedirectToAction("Index", "AccountManagement");
                     }
                 }
                 foreach (var error in result.Errors)
@@ -90,7 +90,7 @@ namespace Banking_Website.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("CreateAccount", "AccountManagement");
+                        return RedirectToAction("Index", "AccountManagement");
                     }
 
                 }

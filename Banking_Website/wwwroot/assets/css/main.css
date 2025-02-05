@@ -65,6 +65,32 @@
   scroll-behavior: smooth;
 }
 
+html, body {
+    height: 100%; /* Ensure the body takes full height */
+    margin: 0; /* Remove default margin */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Stack header, main, and footer vertically */
+}
+
+.wrapper {
+    flex: 1; /* Allow the main content to grow and fill available space */
+    display: flex;
+    flex-direction: column; /* Stack any content inside vertically */
+}
+
+.main {
+    flex: 1; /* Allow the main to grow */
+}
+
+/* Ensure footer stays at the bottom */
+.footer {
+    margin-top: auto; /* Push footer to the bottom */
+}
+
+
 /*--------------------------------------------------------------
 # General Styling & Shared Classes
 --------------------------------------------------------------*/
@@ -553,12 +579,21 @@ h6 {
 # Global Footer
 --------------------------------------------------------------*/
 .footer {
-  color: var(--default-color);
-  background-color: var(--background-color);
-  font-size: 14px;
-  padding-bottom: 50px;
-  position: relative;
+    color: var(--default-color);
+    background-color: var(--background-color);
+    font-size: 14px;
+    padding: 20px 0; /* Adjust padding as needed */
+    width: 100%; /* Make sure it spans the full width */
+    position: relative;
+    left: 0; /* Align to the left */
+    right: 0; /* Align to the right */
+    text-align: center;
+    margin-top: auto;
+    bottom: 0; /* Align to the bottom */
 }
+
+
+
 
 .footer .footer-top {
   padding-top: 50px;

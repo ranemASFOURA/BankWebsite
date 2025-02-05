@@ -26,6 +26,13 @@
 
   <!-- Main CSS File -->
   <link href="~/assets/css/main.css" rel="stylesheet">
+  <!--  Toastr CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+<!--  jQuery & Toastr JS -->
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
 </head>
 
@@ -49,7 +56,15 @@
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted" href="index.html#about">Get Started</a>
+      @if (User.Identity.IsAuthenticated)
+{
+    <a class="btn-getstarted" href="/Account/Logout">Logout</a>
+}
+else
+{
+    <a class="btn-getstarted" href="/Account/Register">Get Started</a>
+}
+
 
     </div>
   </header>
@@ -62,26 +77,19 @@
   </main>
 
  <footer id="footer" class="footer light-background">
-    <div class="container copyright text-center mt-4 " >
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Bethany</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-      
-       <div class="social-links d-flex mt-4 justify-content-center">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-         
+  <div class="container copyright text-center mt-4">
+    <div class="credits">
+      Designed by <a href="https://bootstrapmade.com/">ranem</a>
     </div>
+    <div class="social-links d-flex mt-4 justify-content-center">
+      <a href=""><i class="bi bi-twitter-x"></i></a>
+      <a href=""><i class="bi bi-facebook"></i></a>
+      <a href=""><i class="bi bi-instagram"></i></a>
+      <a href=""><i class="bi bi-linkedin"></i></a>
+    </div>
+  </div>
+</footer>
 
-  </footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -103,6 +111,22 @@
   <!-- Main JS File -->
   <script src="~/assets/js/main.js"></script>
   @await RenderSectionAsync("Scripts",required:false);
+
+  <script>
+    $(document).ready(function () {
+        var successMessage = '@TempData["SuccessMessage"]';
+        var errorMessage = '@TempData["ErrorMessage"]';
+
+        if (successMessage) {
+            toastr.success(successMessage, "Success");
+        }
+
+        if (errorMessage) {
+            toastr.error(errorMessage, "Error");
+        }
+    });
+</script>
+
 </body>
 
 </html>

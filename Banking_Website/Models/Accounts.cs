@@ -20,7 +20,7 @@ namespace Banking_Website.Models
         public string AccountNumber { get; private set; }
 
         [Required(ErrorMessage = "Initial balance is required.")]
-        [Range(100, double.MaxValue, ErrorMessage = "Initial balance must be at least 100.")]
+        [Range(10, double.MaxValue, ErrorMessage = "Initial balance must be a positive value.")]
         public decimal InitialBalance { get; set; }
 
         [Required(ErrorMessage = "Security question is required.")]

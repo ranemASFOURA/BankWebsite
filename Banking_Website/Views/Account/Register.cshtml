@@ -3,116 +3,165 @@
     ViewData["Title"] = "Register";
 }
 
-<section id="register">
-    <div class="form-container">
+<section id="register" class="auth-section">
+    <div class="form-container animate">
         <h2 class="text-center">Register</h2>
-        <p class="text-center">Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p class="text-center">Create an account to get started.</p>
 
         <form asp-controller="Account" asp-action="Register" method="post" role="form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="mb-3">
-                <label asp-for="Name" class="form-label">Your Name</label>
-                <input type="text" asp-for="Name" class="form-control" required>
+            <div class="input-group">
+                <label asp-for="Name">Your Name</label>
+                <input type="text" asp-for="Name" required>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Email" class="form-label">Your Email</label>
-                <input type="email" asp-for="Email" class="form-control" required>
+            <div class="input-group">
+                <label asp-for="Email">Your Email</label>
+                <input type="email" asp-for="Email" required>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Password" class="form-label">Your Password</label>
-                <input type="password" asp-for="Password" class="form-control" required>
+            <div class="input-group">
+                <label asp-for="Password">Your Password</label>
+                <input type="password" asp-for="Password" required>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="ConfirmPassword" class="form-label">Confirm Your Password</label>
-                <input type="password" asp-for="ConfirmPassword" class="form-control" required>
+            <div class="input-group">
+                <label asp-for="ConfirmPassword">Confirm Password</label>
+                <input type="password" asp-for="ConfirmPassword" required>
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Address" class="form-label">Your Address</label>
-                <textarea asp-for="Address" rows="3" class="form-control" required></textarea>
+            <div class="input-group">
+                <label asp-for="Address">Your Address</label>
+                <textarea asp-for="Address" rows="3" required></textarea>
             </div>
 
             <div class="text-center">
-                <a asp-action="Login" class="btn btn-link">Have an Account?</a>
+                <a asp-action="Login" class="link">Already have an account?</a>
             </div>
-
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Register</button>
-            </div>
+            <button type="submit" class="btn">Register</button>
         </form>
     </div>
 </section>
 
 @section Scripts {
-    @{
+     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".animate").forEach(el => {
+                el.style.opacity = "0";
+                setTimeout(() => {
+                    el.style.transition = "opacity 1s ease-in-out";
+                    el.style.opacity = "1";
+                }, 300);
+            });
+        });
+    </script>
 }
 <style>
     :root {
-        --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-        --heading-font: "Raleway", sans-serif;
-        --accent-color: #009970;
-        --background-color: #ffffff;
-        --default-color: #444444;
-        --heading-color: #36343a;
+        --primary-color: #009970;
+        --background-color: #f8f9fa;
+        --text-color: #333;
         --contrast-color: #ffffff;
+        --shadow-color: rgba(0, 0, 0, 0.1);
     }
 
     body {
-        color: var(--default-color);
+        font-family: "Roboto", sans-serif;
         background-color: var(--background-color);
-        font-family: var(--default-font);
+        color: var(--text-color);
         display: flex;
-        flex-direction: column;
-        min-height: 100vh; /* Use min-height instead of height */
-        margin: 0;
-    }
-
-    .main {
-        flex: 1; /* Allow the main content to grow */
-        display: flex;
-        align-items: center;
         justify-content: center;
-        padding: 20px; /* Add some padding */
+        align-items: center;
+        height: 100vh;
     }
 
-    .form-container {
-        background-color: var(--surface-color);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-        width: 400px; /* Adjust width as needed */
-        margin-top: 20px; /* Add margin-top for spacing */
+    .auth-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 100px; /* Adjust margin to separate it from the navbar */
+}
+
+.form-container {
+    background: var(--contrast-color);
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 350px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    width: 350px;
+    text-align: center;
+}
+
+
+    .form-container:hover {
+        transform: translateY(-5px);
     }
 
-    .btn-primary {
-        background-color: var(--accent-color);
-        border: none;
+    h2 {
+        font-family: "Raleway", sans-serif;
+        color: var(--primary-color);
     }
 
-    .btn-primary:hover {
-        background-color: color-mix(in srgb, var(--accent-color), transparent 25%);
+    .input-group {
+        margin-bottom: 15px;
     }
 
-    .form-label {
+    .input-group label {
         font-weight: bold;
-        color: var(--heading-color);
+        display: block;
     }
 
-    .text-danger {
-        color: red;
+    .input-group input,
+    .input-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: border 0.3s;
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: var(--contrast-color);
+        padding: 10px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #007b5e;
     }
 
     .text-center {
         text-align: center;
+        margin-top: 10px;
+    }
+
+    .link {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .link:hover {
+        text-decoration: underline;
     }
 </style>

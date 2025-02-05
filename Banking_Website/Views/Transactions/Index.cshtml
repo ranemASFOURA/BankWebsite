@@ -1,61 +1,123 @@
 ﻿@model Banking_Website.Models.Accounts
 
-<section id="services" class="services section">
-    <div class="container section-title" data-aos="fade-up">
-        <h2>Account Management Services</h2>
+<!-- Adjusted Welcome Card Section with better spacing and modern styling -->
+<section id="welcome-card" class="welcome-card section mt-4">
+    <div class="container d-flex justify-content-center">
+        <div class="card text-center p-4 shadow-lg" style="border-radius: 15px; background: linear-gradient(135deg, #4e54c8, #8f94fb); color: white; max-width: 500px;">
+            <h2 class="fw-bold">Welcome</h2>
+            <h5>Your Account Number: @Model.AccountNumber</h5>
+            <h5>Your Balance: <span class="fw-bold">$@Model.InitialBalance</span></h5>
+        </div>
+    </div>
+</section>
+
+<!-- Adjusted Services Section with modern styling and reduced spacing -->
+<section id="services" class="services section mt-3">
+    <div class="container text-center" data-aos="fade-up">
+        <h2 class="mb-3 text-primary fw-bold">Account Management Services</h2>
         <p>Select a service you want to perform:</p>
     </div>
-    <h3>Account Number: @Model.AccountNumber</h3>
-    <p>Balance: $@Model.InitialBalance</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success text-center" role="alert" id="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
     <div class="container">
-        <div class="row gy-4">
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="service-item position-relative">
-                    <div class="icon">
-                        <i class="bi bi-pencil"></i>
-                    </div>
-                    <a asp-controller="AccountManagement" asp-action="EditAccount" asp-route-accountId="@Model.Id" class="stretched-link">
-                        <h3>Edit Account</h3>
-                    </a>
-                    <p>Modify your account details securely.</p>
-                </div>
+        <div class="row g-3 justify-content-center">
+            <!-- Each service is now styled with modern buttons -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <a asp-controller="AccountManagement" asp-action="EditAccount" asp-route-accountId="@Model.Id" class="btn btn-gradient w-100 p-3">
+                    <i class="bi bi-pencil me-2"></i>Edit Account
+                </a>
             </div>
 
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="service-item position-relative">
-                    <div class="icon">
-                        <i class="bi bi-trash"></i>
-                    </div>
-                    <a asp-controller="AccountManagement" asp-action="DeleteAccount" asp-route-accountId="@Model.Id" class="stretched-link">
-                        <h3>Delete Account</h3>
-                    </a>
-                    <p>Remove your account permanently.</p>
-                </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <button class="btn btn-gradient-danger w-100 p-3" onclick="confirmDelete(@Model.Id)">
+                    <i class="bi bi-trash me-2"></i>Delete Account
+                </button>
             </div>
 
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="service-item position-relative">
-                    <div class="icon">
-                        <i class="bi bi-box-arrow-in-down"></i>
-                    </div>
-                    <a asp-controller="Transactions" asp-action="WithdrawDeposit" asp-route-accountId="@Model.Id" class="stretched-link">
-                        <h3>Withdraw or Deposit</h3>
-                    </a>
-                    <p>Withdraw or Deposit funds from your account conveniently.</p>
-                </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <a asp-controller="Transactions" asp-action="WithdrawDeposit" asp-route-accountId="@Model.Id" class="btn btn-gradient-success w-100 p-3">
+                    <i class="bi bi-box-arrow-in-down me-2"></i>Withdraw / Deposit
+                </a>
             </div>
 
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-                <div class="service-item position-relative">
-                    <div class="icon">
-                        <i class="bi bi-arrow-right-circle"></i>
-                    </div>
-                    <a asp-controller="Transactions" asp-action="Transfer" asp-route-accountId="@Model.Id" class="stretched-link">
-                        <h3>Transfer</h3>
-                    </a>
-                    <p>Transfer funds to other accounts securely.</p>
-                </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                <a asp-controller="Transactions" asp-action="Transfer" asp-route-accountId="@Model.Id" class="btn btn-gradient-info w-100 p-3">
+                    <i class="bi bi-arrow-right-circle me-2"></i>Transfer
+                </a>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+                <a asp-controller="AccountManagement" asp-action="History" asp-route-accountId="@Model.Id" class="btn btn-gradient-secondary w-100 p-3">
+                    <i class="bi bi-clock-history me-2"></i>Transaction History
+                </a>
             </div>
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        // Function to confirm account deletion
+        function confirmDelete(accountId) {
+            if (confirm("Are you sure you want to delete this account? This action cannot be undone.")) {
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = '@Url.Action("DeleteAccount", "AccountManagement")';
+                
+                const hiddenField = document.createElement('input');
+                hiddenField.type = 'hidden';
+                hiddenField.name = 'accountId';
+                hiddenField.value = accountId;
+                
+                form.appendChild(hiddenField);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+}
+
+<!-- Additional CSS to enhance gradient button styling -->
+<style>
+    .btn-gradient {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-gradient:hover {
+        background: linear-gradient(135deg, #764ba2, #667eea);
+        color: white;
+    }
+    .btn-gradient-danger {
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        color: white;
+        border: none;
+        border-radius: 10px;
+    }
+    .btn-gradient-success {
+        background: linear-gradient(135deg, #56ab2f, #a8e063);
+        color: white;
+        border: none;
+        border-radius: 10px;
+    }
+    .btn-gradient-info {
+        background: linear-gradient(135deg, #17a2b8, #4dd0e1);
+        color: white;
+        border: none;
+        border-radius: 10px;
+    }
+    .btn-gradient-secondary {
+        background: linear-gradient(135deg, #6c757d, #adb5bd);
+        color: white;
+        border: none;
+        border-radius: 10px;
+    }
+</style>

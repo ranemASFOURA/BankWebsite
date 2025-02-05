@@ -1,4 +1,4 @@
-﻿@model Banking_Website.Models.ApplicationUser
+﻿@model Banking_Website.ViewModels.CreateAccountViewModel
 
 <style>
     :root {
@@ -20,6 +20,7 @@
         justify-content: center;
         min-height: 100vh;
         margin: 0;
+        margin-top: 300px;
         padding: 20px;
     }
 
@@ -30,6 +31,7 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         width: 400px; /* Adjust width as needed */
         text-align: center;
+        margin-top: 50px;
     }
 
     h2 {
@@ -84,35 +86,48 @@
     <h2>Create a New Bank Account</h2>
 
     <form asp-action="CreateAccount" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-group">
             <label asp-for="Name">Full Name</label>
             <input asp-for="Name" class="form-control" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Email">Email Address</label>
             <input asp-for="Email" class="form-control" type="email" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label for="InitialBalance">Initial Balance</label>
-            <input name="initialBalance" class="form-control" type="number" min="100" required />
+            <label asp-for="InitialBalance">Initial Balance</label>
+            <input asp-for="InitialBalance" class="form-control" type="number" required />
+            <span asp-validation-for="InitialBalance" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label for="SecurityQuestion">Security Question</label>
-            <select name="securityQuestion" class="form-control" required>
+            <label asp-for="SecurityQuestion">Security Question</label>
+            <select asp-for="SecurityQuestion" class="form-control" required>
                 <option value="">Choose a question</option>
                 <option value="What was the name of your first pet?">What was the name of your first pet?</option>
                 <option value="What was your first car?">What was your first car?</option>
             </select>
+            <span asp-validation-for="SecurityQuestion" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label for="SecurityAnswer">Security Answer</label>
-            <input name="securityAnswer" class="form-control" required />
+            <label asp-for="SecurityAnswer">Security Answer</label>
+            <input asp-for="SecurityAnswer" class="form-control" required />
+            <span asp-validation-for="SecurityAnswer" class="text-danger"></span>
         </div>
 
         <button type="submit" class="submit-button">Create Account</button>
     </form>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -3,101 +3,35 @@
     ViewData["Title"] = "Login";
 }
 
-<style>
-    :root {
-        --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-        --heading-font: "Raleway", sans-serif;
-        --accent-color: #009970;
-        --background-color: #ffffff;
-        --default-color: #444444;
-        --heading-color: #36343a;
-        --contrast-color: #ffffff;
-    }
-
-    body {
-        color: var(--default-color);
-        background-color: var(--background-color);
-        font-family: var(--default-font);
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh; /* Use min-height instead of height */
-        margin: 0;
-    }
-
-    .main {
-        flex: 1; /* Allow the main content to grow */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px; /* Add some padding */
-    }
-
-    .form-container {
-        background-color: var(--surface-color);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-        width: 400px; /* Adjust width as needed */
-        margin-top: 20px; /* Add margin-top for spacing */
-    }
-
-    .btn-primary {
-        background-color: var(--accent-color);
-        border: none;
-    }
-
-    .btn-primary:hover {
-        background-color: color-mix(in srgb, var(--accent-color), transparent 25%);
-    }
-
-    .form-label {
-        font-weight: bold;
-        color: var(--heading-color);
-    }
-
-    .text-danger {
-        color: red;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-</style>
-
-<section id="login">
-    <div class="form-container">
+<section id="login" class="auth-section">
+    <div class="form-container animate">
         <h2 class="text-center">Login</h2>
-        <p class="text-center">Accede a tu cuenta de manera segura</p>
+        <p class="text-center">Access your account securely.</p>
 
         <form asp-action="Login" asp-controller="Account" method="post" role="form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="mb-3">
-                <label asp-for="Email" class="form-label">Your Email</label>
-                <input type="email" asp-for="Email" class="form-control" required>
+            <div class="input-group">
+                <label asp-for="Email">Your Email</label>
+                <input type="email" asp-for="Email" required>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Password" class="form-label">Your Password</label>
-                <input type="password" asp-for="Password" class="form-control" required>
+            <div class="input-group">
+                <label asp-for="Password">Your Password</label>
+                <input type="password" asp-for="Password" required>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
-            <div class="form-check mb-3">
-                <label for="RememberMe" class="form-check-label">
-                    <input asp-for="RememberMe" type="checkbox" id="RememberMe" class="form-check-input" />
-                    @Html.DisplayNameFor(a => a.RememberMe)
-                </label>
+            <div class="form-check">
+                <input asp-for="RememberMe" type="checkbox" id="RememberMe">
+                <label for="RememberMe">@Html.DisplayNameFor(a => a.RememberMe)</label>
             </div>
 
             <div class="text-center">
-                <a asp-action="Register" class="btn btn-link">Don't have an Account?</a>
+                <a asp-action="Register" class="link">Don't have an account?</a>
             </div>
-
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Login</button>
-            </div>
+            <button type="submit" class="btn">Login</button>
         </form>
     </div>
 </section>
@@ -106,4 +40,118 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".animate").forEach(el => {
+                el.style.opacity = "0";
+                setTimeout(() => {
+                    el.style.transition = "opacity 1s ease-in-out";
+                    el.style.opacity = "1";
+                }, 300);
+            });
+        });
+    </script>
 }
+
+
+<style>
+    :root {
+        --primary-color: #009970;
+        --background-color: #f8f9fa;
+        --text-color: #333;
+        --contrast-color: #ffffff;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .auth-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .form-container {
+        background: var(--contrast-color);
+        padding: 30px;
+        border-radius: 10px;
+        margin-top: 300px;
+        box-shadow: 0 4px 10px var(--shadow-color);
+        width: 350px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .form-container:hover {
+        transform: translateY(-5px);
+    }
+
+    h2 {
+        font-family: "Raleway", sans-serif;
+        color: var(--primary-color);
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        font-weight: bold;
+        display: block;
+    }
+
+    .input-group input,
+    .input-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: border 0.3s;
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: var(--contrast-color);
+        padding: 10px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #007b5e;
+    }
+
+    .text-center {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .link {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+

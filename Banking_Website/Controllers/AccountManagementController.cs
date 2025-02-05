@@ -21,6 +21,11 @@ namespace Banking_Website.Controllers
             _context = context;
             _userManager = userManager;
         }
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         // GET: CreateAccount
         [HttpGet]
@@ -31,42 +36,55 @@ namespace Banking_Website.Controllers
 
         // POST: CreateAccount
         [HttpPost]
-        public async Task<IActionResult> CreateAccount(string name, string email, decimal initialBalance, string securityQuestion, string securityAnswer)
+        public async Task<IActionResult> CreateAccount(CreateAccountViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                TempData["ErrorMessage"] = "Invalid data. Please check your inputs!";
+                // Return the view with the model to display validation errors
+                return View(model);
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
-            if (ModelState.IsValid)
+
+            // Check if the account already exists
+            var existingAccount = await _context.Accounts
+                .Include(a => a.Customer)
+                .FirstOrDefaultAsync(a => a.Customer.Email == model.Email);
+
+            if (existingAccount != null)
             {
-                // Check if the account already exists
-                var existingAccount = await _context.Accounts
-                    .Include(a => a.Customer)
-                    .FirstOrDefaultAsync(a => a.Customer.Email == email);
-
-                if (existingAccount != null)
-                {
-                    ModelState.AddModelError("Email", "This email is already registered.");
-                    return View();
-                }
-
-                // Create a new account
-                var newAccount = new Accounts
-                {
-                    ApplicationUserId = userId,
-                    InitialBalance = initialBalance,
-                    SecurityQuestion = securityQuestion,
-                    SecurityAnswer = securityAnswer
-                };
-
-                _context.Accounts.Add(newAccount);
-                await _context.SaveChangesAsync();
-
-                
-                return RedirectToAction("Index", "Transactions", new { accountId = newAccount.Id });
+                ModelState.AddModelError("Email", "This email is already registered.");
+                TempData["ErrorMessage"] = "This email is already registered!";
+                return View(model); // Return the model with errors
             }
-            return View();
+
+            // Validate initial balance
+            if (model.InitialBalance.HasValue && model.InitialBalance < 0) // Assuming minimum balance is 100
+            {
+                ModelState.AddModelError("InitialBalance", "Initial balance must be a positive value.");
+                return View(model); // Return the model with errors
+            }
+
+            // Create a new account
+            var newAccount = new Accounts
+            {
+                ApplicationUserId = userId,
+                InitialBalance = model.InitialBalance ?? 0, // Default to 0 if no balance is provided
+                SecurityQuestion = model.SecurityQuestion,
+                SecurityAnswer = model.SecurityAnswer
+            };
+
+            _context.Accounts.Add(newAccount);
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Bank account created successfully!";
+            return RedirectToAction("Index", "Transactions", new { accountId = newAccount.Id });
         }
-         
-    [HttpGet]
+
+
+
+        [HttpGet]
         public IActionResult AccountDetails(int accountId)
         {
             var account = _context.Accounts.Include(a => a.Customer).FirstOrDefault(a => a.Id == accountId);
@@ -84,34 +102,72 @@ namespace Banking_Website.Controllers
             var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
             if (account == null)
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Account not found!";
+                return RedirectToAction("Index");
             }
 
-            account.InitialBalance = newBalance;
+                account.InitialBalance = newBalance;
             account.SecurityQuestion = newSecurityQuestion;
             account.SecurityAnswer = newSecurityAnswer;
 
             _context.Update(account);
             await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Account details updated successfully!";
             return RedirectToAction("AccountDetails", new { accountId = accountId });
         }
 
-        // حذف الحساب
+
         [HttpPost]
-        public async Task<IActionResult> DeleteAccount(int accountId)
+        public async Task<IActionResult> DeleteAccount()
         {
-            var account = await _context.Accounts.Include(a => a.Customer).FirstOrDefaultAsync(a => a.Id == accountId);
+            // Get the current user's ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Find the account linked to the current user
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.ApplicationUserId == userId);
+
             if (account == null)
             {
-                return NotFound();
+                return NotFound("No account found for the current user.");
             }
 
-            // حذف الحساب
+            // Remove the account from the database
             _context.Accounts.Remove(account);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+            TempData["SuccessMessage"] = "Your account has been deleted successfully.";
+
+            // Redirect to the index page after deletion
+            return RedirectToAction("Index", "AccountManagement");
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> History()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.ApplicationUserId == userId);
+
+            if (account == null)
+            {
+                return NotFound("No account found for the current user.");
+            }
+
+            var transactions = await _context.Transactions
+                .Where(t => t.AccountId == account.Id)
+                .Select(t => new Transactions
+                {
+                    Id = t.Id,
+                    TransactionType = t.TransactionType,
+                    Amount = t.Amount,
+                    Date = t.Date,
+                    targetAccountNumber = t.targetAccountNumber,
+                    sourceAccountNumber = account.AccountNumber
+                })
+                .ToListAsync();
+
+            return View(transactions);
+        }
+
+
     }
 }
 
