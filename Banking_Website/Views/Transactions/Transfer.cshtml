@@ -4,29 +4,34 @@
     ViewData["Title"] = "Transfer Funds";
 }
 
-<section id="transfer-funds" class="transaction-section">
-    <div class="container d-flex flex-column align-items-center justify-content-center vh-100">
-        <div class="title-box text-center">
-            <h2>Transfer Funds</h2>
-            <p>Enter the details below to transfer funds.</p>
+<section id="transfer-funds" class="transaction-section" style="margin-top: 80px;">
+    <div class="container d-flex flex-column align-items-center justify-content-center">
+        <div class="title-box text-center mb-4">
+            <h2 style="color: #009970;">Transfer Funds</h2> <!-- اللون الأخضر هنا -->
+            <p class="text-muted">Enter the details below to transfer funds.</p>
         </div>
 
-        <div class="transaction-form">
+        <div class="transaction-form p-4 shadow-lg" style="background: #ffffff; border-radius: 15px; max-width: 500px; width: 100%;">
             <form asp-controller="Transactions" asp-action="Transfer" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" name="accountId" value="@Model.Id" />
 
-                <div class="input-group">
-                    <label for="TargetAccountNumber">Target Account Number</label>
+                <!-- Target Account Number -->
+                <div class="form-group mb-3">
+                    <label for="TargetAccountNumber" class="form-label text-muted">Target Account Number</label>
                     <input type="text" name="targetAccountNumber" class="form-control" required />
                 </div>
 
-                <div class="input-group">
-                    <label for="Amount">Amount</label>
+                <!-- Amount -->
+                <div class="form-group mb-4">
+                    <label for="Amount" class="form-label text-muted">Amount</label>
                     <input type="number" name="amount" step="0.01" class="form-control" required />
+                    <span id="amountError" class="text-danger" style="display: none;">You should not put a negative amount.</span>
                 </div>
 
+                <!-- Submit Button -->
                 <div class="text-center">
-                    <button type="submit" class="btn submit-btn">Transfer</button>
+                    <button type="submit" class="btn" style="background-color: #009970; color: #ffffff; width: 100%;">Transfer</button> <!-- اللون الأخضر هنا -->
                 </div>
             </form>
         </div>
@@ -34,105 +39,21 @@
 </section>
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
     <script>
         $(document).ready(function () {
             $('form').submit(function (event) {
-                var amount = $('input[name="amount"]').val();
+                var amount = parseFloat($('input[name="amount"]').val());
                 if (amount < 0) {
-                    alert('You should not put a negative amount.');
-                    event.preventDefault(); // Prevent form submission
+                    $('#amountError').show();
+                    event.preventDefault();
+                } else {
+                    $('#amountError').hide();
                 }
             });
         });
     </script>
 }
-
-<style>
-    :root {
-        --primary-color: #009970;
-        --background-color: #f8f9fa;
-        --text-color: #333;
-        --contrast-color: #ffffff;
-        --shadow-color: rgba(0, 0, 0, 0.1);
-    }
-
-    body {
-        font-family: "Roboto", sans-serif;
-        background-color: var(--background-color);
-        color: var(--text-color);
-        padding-top: 80px; /* للحفاظ على المسافة العلوية بسبب الـ navbar */
-    }
-
-    .transaction-section {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        padding-top: 80px;
-    }
-
-    .title-box {
-        background: var(--contrast-color);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px var(--shadow-color);
-        text-align: center;
-        width: 100%;
-        max-width: 500px;
-        margin-bottom: 20px;
-    }
-
-    .transaction-form {
-        background: var(--contrast-color);
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px var(--shadow-color);
-        max-width: 500px;
-        width: 100%;
-        text-align: left;
-    }
-
-    .input-group {
-        margin-bottom: 20px;
-    }
-
-    .input-group label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 8px;
-    }
-
-    .input-group input {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        transition: border 0.3s;
-        font-size: 16px;
-    }
-
-    .input-group input:focus {
-        border-color: var(--primary-color);
-        outline: none;
-    }
-
-    .submit-btn {
-        background-color: var(--primary-color);
-        color: var(--contrast-color);
-        padding: 12px;
-        font-size: 16px;
-        font-weight: bold;
-        width: 100%;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background 0.3s, transform 0.2s;
-        box-shadow: 0 4px 10px var(--shadow-color);
-    }
-
-    .submit-btn:hover {
-        background-color: #007b5e;
-        transform: scale(1.05);
-    }
-</style>

@@ -1,113 +1,31 @@
 ﻿@model Banking_Website.ViewModels.CreateAccountViewModel
 
-<style>
-    :root {
-        --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-        --accent-color: #009970; /* Main accent color */
-        --background-color: #f9f9f9; /* Light background */
-        --form-background-color: #ffffff; /* Form background */
-        --default-color: #444444; /* Default text color */
-        --heading-color: #36343a; /* Heading color */
-        --button-color: #007bff; /* Button color */
-        --button-hover-color: #0056b3; /* Button hover color */
-    }
-
-    body {
-        font-family: var(--default-font);
-        background-color: var(--background-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        margin: 0;
-        margin-top: 300px;
-        padding: 20px;
-    }
-
-    .form-container {
-        background-color: var(--form-background-color);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        width: 400px; /* Adjust width as needed */
-        text-align: center;
-        margin-top: 50px;
-    }
-
-    h2 {
-        color: var(--heading-color);
-        margin-bottom: 20px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-        text-align: left;
-    }
-
-    label {
-        font-weight: bold;
-        color: var(--heading-color);
-    }
-
-    .form-control {
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-        padding: 10px;
-        width: 100%;
-        transition: border-color 0.3s;
-    }
-
-    .form-control:focus {
-        border-color: var(--accent-color);
-        box-shadow: 0 0 5px rgba(0, 153, 112, 0.5);
-    }
-
-    .submit-button {
-        background-color: var(--button-color);
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        width: 100%;
-    }
-
-    .submit-button:hover {
-        background-color: var(--button-hover-color);
-    }
-
-    .text-danger {
-        color: red;
-    }
-</style>
-
 <div class="form-container">
-    <h2>Create a New Bank Account</h2>
+    <h2 class="push-me" class="text-center text-success mb-4">Create a New Bank Account</h2>
 
-    <form asp-action="CreateAccount" method="post">
+    <form asp-action="CreateAccount" method="post" class="p-4 shadow-lg" style="background: #ffffff; border-radius: 15px;">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="form-group">
-            <label asp-for="Name">Full Name</label>
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="form-label text-muted">Full Name</label>
             <input asp-for="Name" class="form-control" required />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Email">Email Address</label>
+        <div class="form-group mb-3">
+            <label asp-for="Email" class="form-label text-muted">Email Address</label>
             <input asp-for="Email" class="form-control" type="email" required />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="InitialBalance">Initial Balance</label>
+        <div class="form-group mb-3">
+            <label asp-for="InitialBalance" class="form-label text-muted">Initial Balance</label>
             <input asp-for="InitialBalance" class="form-control" type="number" required />
             <span asp-validation-for="InitialBalance" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="SecurityQuestion">Security Question</label>
+        <div class="form-group mb-3">
+            <label asp-for="SecurityQuestion" class="form-label text-muted">Security Question</label>
             <select asp-for="SecurityQuestion" class="form-control" required>
                 <option value="">Choose a question</option>
                 <option value="What was the name of your first pet?">What was the name of your first pet?</option>
@@ -116,16 +34,88 @@
             <span asp-validation-for="SecurityQuestion" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="SecurityAnswer">Security Answer</label>
+        <div class="form-group mb-4">
+            <label asp-for="SecurityAnswer" class="form-label text-muted">Security Answer</label>
             <input asp-for="SecurityAnswer" class="form-control" required />
             <span asp-validation-for="SecurityAnswer" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="submit-button">Create Account</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success w-100">Create Account</button>
+        </div>
     </form>
 </div>
+<style>
+    /* General Styles */
+    body {
+        margin-top: 5%;
+        background-color: #f8f9fa; /* Light gray background */
+        font-family: 'Poppins', sans-serif;
+    }
 
+    /* Form Container */
+    .form-container {
+        margin-bottom: 3%;
+        margin-top: 5%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+        /* Form Styling */
+        .form-container h2 {
+            color: #009970; /* Green heading */
+            font-weight: bold;
+        }
+
+        .form-container form {
+            background: #ffffff; /* White background */
+            border: 1px solid #e9ecef; /* Light gray border */
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            padding: 20px;
+        }
+
+    .form-group label {
+        color: #6c757d; /* Gray text for labels */
+        font-weight: 500;
+    }
+
+    .form-control {
+        border: 1px solid #e9ecef; /* Light gray border */
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 0.9rem;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #009970; /* Green border on focus */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 153, 112, 0.1); /* Green focus shadow */
+        }
+
+    /* Submit Button */
+    .btn-success {
+        background-color: #009970; /* Green button */
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background-color: #007b5e; /* Darker green on hover */
+        }
+
+    /* Validation Error Messages */
+    .text-danger {
+        font-size: 0.8rem;
+        color: #dc3545; /* Red for validation errors */
+    }
+</style>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

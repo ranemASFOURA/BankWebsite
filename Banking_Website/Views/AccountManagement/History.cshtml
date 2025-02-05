@@ -11,26 +11,34 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
             background-color: #f4f4f4;
+            padding-top: 80px; /* إضافة margin-top لتجنب التداخل مع الـ navbar */
         }
         h2 {
-            color: #333;
+            color: #009970; /* استخدام نفس اللون الأخضر */
+            text-align: center;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
         }
         th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
+            padding: 12px;
+            border: 1px solid #ddd;
             text-align: left;
         }
         th {
-            background-color: #007bff;
+            background-color: #009970; /* استخدام نفس اللون الأخضر */
             color: white;
+            font-weight: bold;
         }
         tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -41,48 +49,59 @@
         .btn {
             margin-top: 20px;
             padding: 10px 15px;
-            background-color: #007bff;
+            background-color: #009970; /* استخدام نفس اللون الأخضر */
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
         }
         .btn:hover {
-            background-color: #0056b3;
+            background-color: #007b5e; /* لون أخضر داكن عند التمرير */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 
-<h2>Transaction History</h2>
+<div class="container">
+    <h2>Transaction History</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>Transaction ID</th>
-            <th>Type</th>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Source Account</th>
-            <th>Target Account</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var transaction in Model)
-        {
+    <table>
+        <thead>
             <tr>
-                <td>@transaction.Id</td>
-                <td>@transaction.TransactionType</td>
-                <td>@transaction.Amount.ToString("C")</td>
-                <td>@transaction.Date.ToShortDateString()</td>
-                <td>@transaction.sourceAccountNumber</td>
-                <td>@transaction.targetAccountNumber</td>
+                <th>Transaction ID</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Source Account</th>
+                <th>Target Account</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var transaction in Model)
+            {
+                <tr>
+                    <td>@transaction.Id</td>
+                    <td>@transaction.TransactionType</td>
+                    <td>@transaction.Amount.ToString("C")</td>
+                    <td>@transaction.Date.ToShortDateString()</td>
+                    <td>@transaction.sourceAccountNumber</td>
+                    <td>@transaction.targetAccountNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<a asp-controller="Transactions" asp-action="Index"  class="btn">Back to Account Management</a>
+    <a asp-controller="Transactions" asp-action="Index" class="btn">Back to Account Management</a>
+</div>
 
 </body>
 </html>

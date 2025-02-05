@@ -3,7 +3,8 @@
     ViewData["Title"] = "Register";
 }
 
-<section id="register" class="auth-section">
+<section id="register" class="auth-section" style="padding-top: 80px;">
+    <!-- Added padding-top -->
     <div class="form-container animate">
         <h2 class="text-center">Register</h2>
         <p class="text-center">Create an account to get started.</p>
@@ -41,7 +42,7 @@
             </div>
 
             <div class="text-center">
-                <a asp-action="Login" class="link">Already have an account?</a>
+                <a asp-action="Login" class="link">Already have an account? <span>Login here</span></a>
             </div>
             <button type="submit" class="btn">Register</button>
         </form>
@@ -49,7 +50,7 @@
 </section>
 
 @section Scripts {
-     @{
+    @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
@@ -65,103 +66,140 @@
     </script>
 }
 <style>
-    :root {
-        --primary-color: #009970;
-        --background-color: #f8f9fa;
-        --text-color: #333;
-        --contrast-color: #ffffff;
-        --shadow-color: rgba(0, 0, 0, 0.1);
+    /* General Styles */
+    body {
+        background-color: #ffffff; /* White background */
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
     }
 
-    body {
-        font-family: "Roboto", sans-serif;
-        background-color: var(--background-color);
-        color: var(--text-color);
+    main {
+        flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        padding-top: 80px; /* Added padding to avoid navbar overlap */
     }
 
     .auth-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top: 100px; /* Adjust margin to separate it from the navbar */
-}
-
-.form-container {
-    background: var(--contrast-color);
-    padding: 30px;
-    border-radius: 10px;
-    margin-top: 350px;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    width: 350px;
-    text-align: center;
-}
-
-
-    .form-container:hover {
-        transform: translateY(-5px);
+        width: 100%;
+        max-width: 500px; /* Increased width */
+        padding: 20px;
+        margin-top: 5%;
+        margin-bottom: 3%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        border-radius: 12px; /* Rounded corners */
+        background-color: #ffffff; /* White background */
     }
 
-    h2 {
-        font-family: "Raleway", sans-serif;
-        color: var(--primary-color);
+    /* Footer Full Width Fix */
+    footer {
+        width: 100%;
+        background: linear-gradient(to right, #f8f9fa, #e9ecef); /* Light gradient */
+        color: #333;
+        padding: 20px 0;
+        text-align: center;
+        border-top: 1px solid #ddd;
+        margin-top: auto; /* Push footer to the bottom */
     }
+
+    /* Registration Form Styles */
+    .form-container {
+        opacity: 0; /* For animation */
+    }
+
+        .form-container h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .form-container p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
 
     .input-group {
         margin-bottom: 15px;
     }
 
-    .input-group label {
-        font-weight: bold;
-        display: block;
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px; /* Rounded corners */
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+            .input-group input:focus,
+            .input-group textarea:focus {
+                border-color: #009970; /* Green border on focus */
+                outline: none;
+            }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
     }
 
-    .input-group input,
-    .input-group textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        transition: border 0.3s;
-    }
+        .form-check input {
+            margin-right: 10px;
+        }
 
-    .input-group input:focus,
-    .input-group textarea:focus {
-        border-color: var(--primary-color);
-        outline: none;
-    }
-
-    .btn {
-        background-color: var(--primary-color);
-        color: var(--contrast-color);
-        padding: 10px;
-        width: 100%;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-
-    .btn:hover {
-        background-color: #007b5e;
-    }
-
-    .text-center {
-        text-align: center;
-        margin-top: 10px;
-    }
+        .form-check label {
+            font-size: 0.9rem;
+            color: #333;
+        }
 
     .link {
-        color: var(--primary-color);
+        font-size: 0.9rem;
+        color: #666;
         text-decoration: none;
-        font-size: 14px;
+        transition: color 0.3s ease;
     }
 
-    .link:hover {
-        text-decoration: underline;
+        .link span {
+            color: #009970; /* Green color for the link */
+            font-weight: 500;
+        }
+
+        .link:hover {
+            color: #009970; /* Green color on hover */
+        }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #009970; /* Green button */
+        color: #fff;
+        border: none;
+        border-radius: 8px; /* Rounded corners */
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn:hover {
+            background-color: #007b5e; /* Darker green on hover */
+        }
+
+    .text-danger {
+        font-size: 0.8rem;
+        color: #dc3545; /* Red for validation errors */
     }
 </style>

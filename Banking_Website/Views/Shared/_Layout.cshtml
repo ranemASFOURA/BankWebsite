@@ -2,134 +2,304 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>ranem Bank Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>ranem Bank Template</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
 
-  <!-- Favicons -->
-  <link href="~/assets/img/favicon.png" rel="icon">
-  <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="~/assets/img/favicon.png" rel="icon">
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="~/assets/css/main.css" rel="stylesheet">
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-  <!-- Main CSS File -->
-  <link href="~/assets/css/main.css" rel="stylesheet">
-  <!--  Toastr CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <!-- jQuery & Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<!--  jQuery & Toastr JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Custom CSS for Footer -->
+    <style>
+        /* Ensure the footer is at the bottom of the page */
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
 
+        main {
+            flex: 1;
+        }
 
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef); /* Light gradient */
+            color: #333;
+            padding: 30px 0 10px; /* Reduced padding */
+            border-top: 1px solid #ddd;
+        }
+
+        .footer-top {
+            padding-bottom: 20px; /* Reduced padding */
+        }
+
+            .footer-top h4 {
+                font-size: 1rem; /* Smaller font size */
+                margin-bottom: 10px; /* Reduced margin */
+                color: #28a745; /* Green heading color */
+            }
+
+            .footer-top p {
+                font-size: 0.8rem; /* Smaller font size */
+                line-height: 1.4; /* Tighter line height */
+                margin-bottom: 10px; /* Reduced margin */
+            }
+
+            .footer-top ul {
+                list-style: none;
+                padding: 0;
+                margin: 0; /* Remove default margin */
+            }
+
+                .footer-top ul li {
+                    margin-bottom: 8px; /* Reduced margin */
+                }
+
+                    .footer-top ul li a {
+                        color: #28a745; /* Green link color */
+                        text-decoration: none;
+                        font-size: 0.8rem; /* Smaller font size */
+                        transition: color 0.3s ease;
+                    }
+
+                        .footer-top ul li a:hover {
+                            color: #218838; /* Darker green hover color */
+                        }
+
+                    .footer-top ul li i {
+                        margin-right: 8px; /* Reduced margin */
+                        color: #28a745; /* Green icon color */
+                    }
+
+        .newsletter-form {
+            display: flex;
+            align-items: center;
+        }
+
+            .newsletter-form input {
+                width: 70%;
+                padding: 8px; /* Reduced padding */
+                border: 1px solid #ddd;
+                border-radius: 5px 0 0 5px;
+                font-size: 0.8rem; /* Smaller font size */
+            }
+
+            .newsletter-form button {
+                width: 30%;
+                padding: 8px; /* Reduced padding */
+                background: #28a745; /* Green button */
+                color: #fff;
+                border: none;
+                border-radius: 0 5px 5px 0;
+                cursor: pointer;
+                transition: background 0.3s ease;
+                font-size: 0.8rem; /* Smaller font size */
+            }
+
+                .newsletter-form button:hover {
+                    background: #218838; /* Darker green on hover */
+                }
+
+        .footer-bottom {
+            background: #e9ecef; /* Light gray background */
+            padding: 10px 0; /* Reduced padding */
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+            .footer-bottom .credits {
+                font-size: 0.8rem; /* Smaller font size */
+            }
+
+                .footer-bottom .credits a {
+                    color: #28a745; /* Green link color */
+                    text-decoration: none;
+                }
+
+                    .footer-bottom .credits a:hover {
+                        text-decoration: underline;
+                    }
+
+            .footer-bottom .social-links a {
+                color: #28a745; /* Green icon color */
+                font-size: 1rem; /* Smaller font size */
+                margin: 0 8px; /* Reduced margin */
+                transition: color 0.3s ease;
+            }
+
+                .footer-bottom .social-links a:hover {
+                    color: #218838; /* Darker green hover color */
+                }
+    </style>
 </head>
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-end">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-end">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="~/assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">Bank</h1>
-      </a>
+            <a href="index.html" class="logo d-flex align-items-center me-auto">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="~/assets/img/logo.png" alt=""> -->
+                <h1 class="sitename">Bank</h1>
+            </a>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="/Home/index" class="active">Home</a></li>
-          <li><a href="/Home/index">About</a></li>
-          <li><a href="/Home/Services">Services</a></li>
-          <li><a href="/Home/Contact">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-      @if (User.Identity.IsAuthenticated)
-{
-    <a class="btn-getstarted" href="/Account/Logout">Logout</a>
-}
-else
-{
-    <a class="btn-getstarted" href="/Account/Register">Get Started</a>
-}
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="/Home/index" class="active">Home</a></li>
+                    <li><a href="/Home/index">About</a></li>
+                    <li><a href="/Home/Services">Services</a></li>
+                    <li><a href="/Home/Contact">Contact</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn-getstarted" href="/Account/Logout">Logout</a>
+            }
+            else
+            {
+                <a class="btn-getstarted" href="/Account/Register">Get Started</a>
+            }
 
+        </div>
+    </header>
 
-    </div>
-  </header>
+    <main class="main">
+        @RenderBody()
+    </main>
+    <footer id="footer" class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row gy-3">
+                    <!-- Reduced gutter spacing -->
+                    <!-- About Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <h4>About Us</h4>
+                        <p>We are a modern bank dedicated to providing innovative financial solutions.</p>
+                    </div>
 
-  <main class="main">
+                    <!-- Quick Links Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="/Home/index">Home</a></li>
+                            <li><a href="/Home/index">About Us</a></li>
+                            <li><a href="/Home/Services">Services</a></li>
+                            <li><a href="/Home/Contact">Contact</a></li>
+                        </ul>
+                    </div>
 
-    
-    @RenderBody()
+                    <!-- Contact Info Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <h4>Contact Us</h4>
+                        <ul>
+                            <li><i class="bi bi-geo-alt"></i> 123 Bank Street, Financial City, FC 12345</li>
+                            <li><i class="bi bi-phone"></i> +958891263 </li>
+                            <li><i class="bi bi-envelope"></i> info@ranembank.com</li>
+                        </ul>
+                    </div>
 
-  </main>
+                    <!-- Newsletter Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <h4>Newsletter</h4>
+                        <p>Stay updated with our latest news.</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Raneem@gmail.com" required>
+                            <button type="submit"><i class="bi bi-send"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
- <footer id="footer" class="footer light-background">
-  <div class="container copyright text-center mt-4">
-    <div class="credits">
-      Designed by <a href="https://bootstrapmade.com/">ranem</a>
-    </div>
-    <div class="social-links d-flex mt-4 justify-content-center">
-      <a href=""><i class="bi bi-twitter-x"></i></a>
-      <a href=""><i class="bi bi-facebook"></i></a>
-      <a href=""><i class="bi bi-instagram"></i></a>
-      <a href=""><i class="bi bi-linkedin"></i></a>
-    </div>
-  </div>
-</footer>
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="credits">
+                            Designed by <a href="https://bootstrapmade.com/">ranem</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="social-links d-flex justify-content-end">
+                            <a href=""><i class="bi bi-twitter-x"></i></a>
+                            <a href=""><i class="bi bi-facebook"></i></a>
+                            <a href=""><i class="bi bi-instagram"></i></a>
+                            <a href=""><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- Preloader -->
+    <div id="preloader"></div>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+    <!-- Vendor JS Files -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/assets/vendor/aos/aos.js"></script>
+    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="~/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <!--for transactios -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-  <!-- Vendor JS Files -->
-   <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="~/assets/vendor/php-email-form/validate.js"></script>
-  <script src="~/assets/vendor/aos/aos.js"></script>
-  <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="~/assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="~/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <!-- Main JS File -->
+    <script src="~/assets/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false);
 
-  <!-- Main JS File -->
-  <script src="~/assets/js/main.js"></script>
-  @await RenderSectionAsync("Scripts",required:false);
+    <script>
+        $(document).ready(function () {
+            var successMessage = '@TempData["SuccessMessage"]';
+            var errorMessage = '@TempData["ErrorMessage"]';
 
-  <script>
-    $(document).ready(function () {
-        var successMessage = '@TempData["SuccessMessage"]';
-        var errorMessage = '@TempData["ErrorMessage"]';
+            if (successMessage) {
+                toastr.success(successMessage, "Success");
+            }
 
-        if (successMessage) {
-            toastr.success(successMessage, "Success");
-            
-        }
-
-        if (errorMessage) {
-            toastr.error(errorMessage, "Error", { positionClass: "toast-top-right" });
-             @TempData.Remove("ErrorMessage");
-        }
-    });
-</script>
+            if (errorMessage) {
+                toastr.error(errorMessage, "Error", { positionClass: "toast-top-right" });
+        @TempData.Remove("ErrorMessage");
+            }
+        });
+    </script>
 
 </body>
 
 </html>
-

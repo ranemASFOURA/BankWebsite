@@ -1,65 +1,116 @@
 ﻿@model Banking_Website.Models.Accounts
 
-<!-- Adjusted Welcome Card Section with better spacing and modern styling -->
+<!-- Welcome Card Section -->
 <section id="welcome-card" class="welcome-card section mt-4">
     <div class="container d-flex justify-content-center">
-        <div class="card text-center p-4 shadow-lg" style="border-radius: 15px; background: linear-gradient(135deg, #4e54c8, #8f94fb); color: white; max-width: 500px;">
-            <h2 class="fw-bold">Welcome</h2>
-            <h5>Your Account Number: @Model.AccountNumber</h5>
-            <h5>Your Balance: <span class="fw-bold">$@Model.InitialBalance</span></h5>
+        <div class="card text-center p-4 shadow-lg" style="border-radius: 15px; background: #ffffff; max-width: 1000px;">
+            <div class="d-flex justify-content-center mb-3">
+                <i class="bi bi-person-circle fs-1 text-success me-3"></i>
+                <i class="bi bi-wallet2 fs-1 text-success"></i>
+            </div>
+            <h2 class="fw-bold text-success">Welcome</h2>
+            <h5 class="text-muted">Your Account Number: <span class="text-dark">@Model.AccountNumber</span></h5>
+            <h5 class="text-muted">Your Balance: <span class="fw-bold text-dark">$@Model.InitialBalance</span></h5>
         </div>
     </div>
 </section>
-
-<!-- Adjusted Services Section with modern styling and reduced spacing -->
-<section id="services" class="services section mt-3">
+<!-- Services Section -->
+<section id="services" class="services section mt-4">
     <div class="container text-center" data-aos="fade-up">
-        <h2 class="mb-3 text-primary fw-bold">Account Management Services</h2>
-        <p>Select a service you want to perform:</p>
+        <h2 class="mb-3 text-success fw-bold">Account Management Services</h2>
+        <p class="text-muted">Select a service you want to perform:</p>
     </div>
-
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success text-center" role="alert" id="alert">
-            @TempData["SuccessMessage"]
-        </div>
-    }
 
     <div class="container">
-        <div class="row g-3 justify-content-center">
-            <!-- Each service is now styled with modern buttons -->
+        <div class="row g-4 justify-content-center">
+            <!-- Edit Account Card -->
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                <a asp-controller="AccountManagement" asp-action="EditAccount" asp-route-accountId="@Model.Id" class="btn btn-gradient w-100 p-3">
-                    <i class="bi bi-pencil me-2"></i>Edit Account
-                </a>
+                <div class="card service-card h-100 shadow-sm" style="background: #f8f9fa;">
+                    <div class="card-body text-center p-3">
+                        <i class="bi bi-pencil fs-1 text-success"></i>
+                        <h5 class="card-title mt-3">Edit Account</h5>
+                        <a asp-controller="AccountManagement" asp-action="EditAccount" asp-route-accountId="@Model.Id" class="btn btn-success mt-2">Edit</a>
+                    </div>
+                </div>
             </div>
 
+            <!-- Delete Account Card -->
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                <button class="btn btn-gradient-danger w-100 p-3" onclick="confirmDelete(@Model.Id)">
-                    <i class="bi bi-trash me-2"></i>Delete Account
-                </button>
+                <div class="card service-card h-100 shadow-sm" style="background: #f8f9fa;">
+                    <div class="card-body text-center p-3">
+                        <i class="bi bi-trash fs-1 text-danger"></i>
+                        <h5 class="card-title mt-3">Delete Account</h5>
+                        <button class="btn btn-danger mt-2" onclick="confirmDelete(@Model.Id)">Delete</button>
+                    </div>
+                </div>
             </div>
 
+            <!-- Withdraw/Deposit Card -->
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                <a asp-controller="Transactions" asp-action="WithdrawDeposit" asp-route-accountId="@Model.Id" class="btn btn-gradient-success w-100 p-3">
-                    <i class="bi bi-box-arrow-in-down me-2"></i>Withdraw / Deposit
-                </a>
+                <div class="card service-card h-100 shadow-sm" style="background: #f8f9fa;">
+                    <div class="card-body text-center p-3">
+                        <i class="bi bi-cash-coin fs-1 text-success"></i>
+                        <h5 class="card-title mt-3">Withdraw / Deposit</h5>
+                        <a asp-controller="Transactions" asp-action="WithdrawDeposit" asp-route-accountId="@Model.Id" class="btn btn-success mt-2">Go</a>
+                    </div>
+                </div>
             </div>
 
+            <!-- Transfer Card -->
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
-                <a asp-controller="Transactions" asp-action="Transfer" asp-route-accountId="@Model.Id" class="btn btn-gradient-info w-100 p-3">
-                    <i class="bi bi-arrow-right-circle me-2"></i>Transfer
-                </a>
+                <div class="card service-card h-100 shadow-sm" style="background: #f8f9fa;">
+                    <div class="card-body text-center p-3">
+                        <i class="bi bi-arrow-left-right fs-1 text-success"></i>
+                        <h5 class="card-title mt-3">Transfer</h5>
+                        <a asp-controller="Transactions" asp-action="Transfer" asp-route-accountId="@Model.Id" class="btn btn-success mt-2">Transfer</a>
+                    </div>
+                </div>
             </div>
 
+            <!-- Transaction History Card -->
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
-                <a asp-controller="AccountManagement" asp-action="History" asp-route-accountId="@Model.Id" class="btn btn-gradient-secondary w-100 p-3">
-                    <i class="bi bi-clock-history me-2"></i>Transaction History
-                </a>
+                <div class="card service-card h-100 shadow-sm" style="background: #f8f9fa;">
+                    <div class="card-body text-center p-3">
+                        <i class="bi bi-clock-history fs-1 text-success"></i>
+                        <h5 class="card-title mt-3">Transaction History</h5>
+                        <a asp-controller="AccountManagement" asp-action="History" asp-route-accountId="@Model.Id" class="btn btn-success mt-2">View</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Toastify Notifications -->
+<script>
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <text>
+                Toastify({
+                    text: "@ViewBag.SuccessMessage",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#28a745",
+                    }).showToast();
+        </text>
+    }
+
+    @if (ViewData.ModelState.ErrorCount > 0)
+    {
+        <text>
+                Toastify({
+                    text: "@Html.Raw(ViewData.ModelState.First().Value.Errors.First().ErrorMessage)",
+                duration: 5000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#dc3545",
+                    }).showToast();
+        </text>
+    }
+</script>
 
 @section Scripts {
     <script>
@@ -69,12 +120,12 @@
                 const form = document.createElement('form');
                 form.method = 'post';
                 form.action = '@Url.Action("DeleteAccount", "AccountManagement")';
-                
+
                 const hiddenField = document.createElement('input');
                 hiddenField.type = 'hidden';
                 hiddenField.name = 'accountId';
                 hiddenField.value = accountId;
-                
+
                 form.appendChild(hiddenField);
                 document.body.appendChild(form);
                 form.submit();
@@ -85,39 +136,68 @@
 
 <!-- Additional CSS to enhance gradient button styling -->
 <style>
-    .btn-gradient {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        transition: all 0.3s ease-in-out;
+    /* General Styles */
+    body {
+        background-color: #ffffff; /* White background */
+        font-family: 'Poppins', sans-serif;
     }
-    .btn-gradient:hover {
-        background: linear-gradient(135deg, #764ba2, #667eea);
-        color: white;
+
+    /* Welcome Card */
+    .welcome-card .card {
+        background: #ffffff; /* White background */
+        border: 1px solid #e9ecef; /* Light gray border */
+        border-radius: 15px;
+        margin-top:3%;
+
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
     }
-    .btn-gradient-danger {
-        background: linear-gradient(135deg, #ff416c, #ff4b2b);
-        color: white;
-        border: none;
-        border-radius: 10px;
+
+    .welcome-card i {
+        color: #28a745; /* Green icon color */
     }
-    .btn-gradient-success {
-        background: linear-gradient(135deg, #56ab2f, #a8e063);
-        color: white;
-        border: none;
-        border-radius: 10px;
+
+    .welcome-card h2 {
+        color: #28a745; /* Green heading color */
     }
-    .btn-gradient-info {
-        background: linear-gradient(135deg, #17a2b8, #4dd0e1);
-        color: white;
-        border: none;
-        border-radius: 10px;
+
+    .welcome-card h5 {
+        color: #6c757d; /* Gray text color */
     }
-    .btn-gradient-secondary {
-        background: linear-gradient(135deg, #6c757d, #adb5bd);
-        color: white;
-        border: none;
-        border-radius: 10px;
+
+        .welcome-card h5 span {
+            color: #343a40; /* Dark text color */
+        }
+
+    /* Service Cards */
+    .service-card {
+        margin-bottom:1%;
+        border: 1px solid #e9ecef; /* Light gray border */
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Hover shadow */
+        }
+
+        .service-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .service-card i {
+            color: #28a745; /* Green icon color */
+        }
+
+        .service-card .btn {
+            background-color: #28a745; /* Green button */
+            border: none;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+            .service-card .btn:hover {
+                background-color: #218838; /* Darker green on hover */
+            }
 </style>

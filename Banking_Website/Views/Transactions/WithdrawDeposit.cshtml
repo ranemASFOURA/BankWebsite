@@ -4,149 +4,59 @@
     ViewData["Title"] = "Withdraw or Deposit";
 }
 
-<section id="withdraw-deposit" class="transaction-section">
-    <div class="container d-flex flex-column align-items-center justify-content-center vh-100">
-        <div class="title-box text-center">
-            <h2>Withdraw or Deposit</h2>
-            <p>Choose your transaction type and enter the amount.</p>
+<section id="withdraw-deposit" class="transaction-section" style="margin-top: 80px;">
+    <div class="container d-flex flex-column align-items-center justify-content-center">
+        <div class="title-box text-center mb-4">
+            <h2 style="color: #009970;">Withdraw or Deposit</h2> <!-- اللون الأخضر هنا -->
+            <p class="text-muted">Choose your transaction type and enter the amount.</p>
         </div>
 
-        <div class="transaction-form">
+        <div class="transaction-form p-4 shadow-lg" style="background: #ffffff; border-radius: 15px; max-width: 500px; width: 100%;">
             <form asp-controller="Transactions" asp-action="WithdrawDeposit" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" name="accountId" value="@Model.Id" />
 
-                <div class="input-group">
-                    <label for="TransactionType">Transaction Type</label>
+                <!-- Transaction Type -->
+                <div class="form-group mb-3">
+                    <label for="TransactionType" class="form-label text-muted">Transaction Type</label>
                     <select name="transactionType" class="form-control" required>
                         <option value="deposit">Deposit</option>
                         <option value="withdraw">Withdraw</option>
-                    </select>   
+                    </select>
                 </div>
 
-                <div class="input-group">
-    <label for="Amount">Amount</label>
-    <input type="number" name="amount" step="0.01" class="form-control" required />
-    <span id="amountError" class="text-danger" style="display: none;">You should not put a negative amount.</span> <!-- رسالة الخطأ -->
-</div>
+                <!-- Amount -->
+                <div class="form-group mb-4">
+                    <label for="Amount" class="form-label text-muted">Amount</label>
+                    <input type="number" name="amount" step="0.01" class="form-control" required />
+                    <span id="amountError" class="text-danger" style="display: none;">You should not put a negative amount.</span>
+                </div>
 
+                <!-- Submit Button -->
                 <div class="text-center">
-                    <button type="submit" class="btn submit-btn">Submit</button>
+                    <button type="submit" class="btn" style="background-color: #009970; color: #ffffff; width: 100%;">Submit</button> <!-- اللون الأخضر هنا -->
                 </div>
             </form>
         </div>
     </div>
 </section>
 
-
-<style>
-    :root {
-        --primary-color: #009970;
-        --background-color: #f8f9fa;
-        --text-color: #333;
-        --contrast-color: #ffffff;
-        --shadow-color: rgba(0, 0, 0, 0.1);
-    }
-
-    body {
-        font-family: "Roboto", sans-serif;
-        background-color: var(--background-color);
-        color: var(--text-color);
-    }
-
-    .transaction-section {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        padding-top: 80px;
-    }
-
-    .title-box {
-        background: var(--contrast-color);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px var(--shadow-color);
-        text-align: center;
-        width: 100%;
-        max-width: 500px;
-        margin-bottom: 20px;
-    }
-
-    .transaction-form {
-        background: var(--contrast-color);
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px var(--shadow-color);
-        max-width: 500px;
-        width: 100%;
-        text-align: left;
-    }
-
-    .input-group {
-        margin-bottom: 20px;
-    }
-
-    .input-group label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 8px;
-    }
-
-    .input-group input,
-    .input-group select {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        transition: border 0.3s;
-        font-size: 16px;
-    }
-
-    .input-group input:focus,
-    .input-group select:focus {
-        border-color: var(--primary-color);
-        outline: none;
-    }
-
-    .submit-btn {
-        background-color: var(--primary-color);
-        color: var(--contrast-color);
-        padding: 12px;
-        font-size: 16px;
-        font-weight: bold;
-        width: 100%;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background 0.3s, transform 0.2s;
-        box-shadow: 0 4px 10px var(--shadow-color);
-    }
-
-    .submit-btn:hover {
-        background-color: #007b5e;
-        transform: scale(1.05);
-    }
-</style>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-   
+
     <script>
         $(document).ready(function () {
-    $('form').submit(function (event) {
-        var amount = parseFloat($('input[name="amount"]').val());
-        if (amount < 0) {
-            $('#amountError').show();
-            event.preventDefault(); 
-        } else {
-            $('#amountError').hide();
-        }
-    });
-});
-
+            $('form').submit(function (event) {
+                var amount = parseFloat($('input[name="amount"]').val());
+                if (amount < 0) {
+                    $('#amountError').show();
+                    event.preventDefault();
+                } else {
+                    $('#amountError').hide();
+                }
+            });
+        });
     </script>
-
 }
-
