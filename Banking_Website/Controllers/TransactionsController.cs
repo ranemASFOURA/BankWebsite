@@ -22,10 +22,7 @@ namespace Banking_Website.Controllers
 
         public async Task<IActionResult> Index()
         {
-
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-
             Accounts account = await _context.Accounts.FirstOrDefaultAsync(a => a.ApplicationUserId == userId);
 
             if (account == null)
@@ -36,30 +33,26 @@ namespace Banking_Website.Controllers
             return View(account);
         }
 
-
-
         // GET: Withdraw or Deposit
-
         [HttpGet]
         public async Task<IActionResult> WithdrawDeposit(int accountId)
         {
             var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
             if (account == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
 
-            return View(account); 
+            return View(account);
         }
 
-
+        // POST: Withdraw or Deposit
         // POST: Withdraw or Deposit
         [HttpPost]
         public async Task<IActionResult> WithdrawDeposit(int accountId, string transactionType, decimal amount)
         {
             if (amount < 0) // Check for negative amount
             {
-                //ModelState.AddModelError("", "You should not put a negative amount.");
                 TempData["ErrorMessage"] = "You should not put a negative amount.";
                 return View(); // Return the view with the error message
             }
@@ -77,7 +70,6 @@ namespace Banking_Website.Controllers
                 {
                     if (amount > MaxDepositAmount)
                     {
-                        //ModelState.AddModelError("", $"Deposit cannot exceed {MaxDepositAmount}.");
                         TempData["ErrorMessage"] = $"Deposit cannot exceed {MaxDepositAmount}.";
                         return View();
                     }
@@ -96,9 +88,14 @@ namespace Banking_Website.Controllers
                 }
                 else if (transactionType == "withdraw")
                 {
+                    if (account.InitialBalance < amount)
+                    {
+                        TempData["ErrorMessage"] = "Insufficient funds. You cannot withdraw more than your current balance.";
+                        return View();
+                    }
+
                     if (account.InitialBalance - amount < MinBalanceForWithdrawal)
                     {
-                        //ModelState.AddModelError("", $"Insufficient funds. Minimum balance of {MinBalanceForWithdrawal} must remain.");
                         TempData["ErrorMessage"] = $"Insufficient funds. Minimum balance of {MinBalanceForWithdrawal} must remain.";
                         return View();
                     }
@@ -118,19 +115,17 @@ namespace Banking_Website.Controllers
                 }
                 else
                 {
-                    //ModelState.AddModelError("", "Invalid transaction type.");
                     TempData["ErrorMessage"] = "Invalid transaction type.";
                     return View();
                 }
 
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Transaction successful.";
-                return RedirectToAction("Index", "Transactions", new { accountId }); // Redirect to a suitable page after transaction
+                return RedirectToAction("Index", "Transactions", new { accountId });
             }
 
             return View();
         }
-
 
 
         // GET: Transfer
@@ -146,14 +141,13 @@ namespace Banking_Website.Controllers
             return View(account);
         }
 
-
+        // POST: Transfer
         // POST: Transfer
         [HttpPost]
         public async Task<IActionResult> Transfer(int accountId, string targetAccountNumber, decimal amount)
         {
             if (amount < 0) // Check for negative amount
             {
-                //ModelState.AddModelError("", "You should not put a negative amount.");
                 TempData["ErrorMessage"] = "You should not put a negative amount.";
                 return View(); // Return the view with the error message
             }
@@ -165,14 +159,20 @@ namespace Banking_Website.Controllers
 
                 if (sourceAccount == null || targetAccount == null)
                 {
-                   // ModelState.AddModelError("", "Source account or target account not found.");
                     TempData["ErrorMessage"] = "Source account or target account not found.";
                     return View();
                 }
 
+                // Check if the source account has sufficient balance
+                if (sourceAccount.InitialBalance < amount)
+                {
+                    TempData["ErrorMessage"] = "Insufficient funds. You cannot transfer more than your current balance.";
+                    return View();
+                }
+
+                // Ensure the minimum balance requirement is met after the transfer
                 if (sourceAccount.InitialBalance - amount < MinBalanceForWithdrawal)
                 {
-                   // ModelState.AddModelError("", $"Insufficient funds. Minimum balance of {MinBalanceForWithdrawal} must remain.");
                     TempData["ErrorMessage"] = $"Insufficient funds. Minimum balance of {MinBalanceForWithdrawal} must remain.";
                     return View();
                 }
@@ -204,12 +204,11 @@ namespace Banking_Website.Controllers
 
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Transfer successful.";
-                return RedirectToAction("Index", "Transactions", new { accountId = sourceAccount.Id }); // Redirect to a suitable page after transfer
+                return RedirectToAction("Index", "Transactions", new { accountId = sourceAccount.Id });
             }
 
             return View();
         }
-
 
     }
 }

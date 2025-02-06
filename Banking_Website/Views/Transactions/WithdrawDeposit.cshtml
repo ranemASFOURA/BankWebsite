@@ -58,5 +58,23 @@
                 }
             });
         });
+
+        $(document).ready(function () {
+    $('form').submit(function (event) {
+        var amount = parseFloat($('input[name="amount"]').val());
+        var currentBalance = parseFloat('@Model.InitialBalance');  
+        
+        if (amount < 0) {
+            $('#amountError').text('You should not put a negative amount.').show();
+            event.preventDefault();
+        } else if (amount > currentBalance) {
+            $('#amountError').text('Insufficient funds. You cannot transfer more than your current balance.').show();
+            event.preventDefault();
+        } else {
+            $('#amountError').hide();
+        }
+    });
+});
+
     </script>
 }
